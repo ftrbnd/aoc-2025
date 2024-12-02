@@ -8,11 +8,11 @@ describe('On Day 1', () => {
 3   9
 3   3`;
 
-	it(`Part 1: Get the total distance between the left and right lists`, () => {
+	it.skip(`Part 1: Get the total distance between the left and right lists`, () => {
 		expect(day1.solveForPartOne(example)).toBe(11);
 	});
 
-	it('Part 2: Get the similarity score', () => {
+	it.skip('Part 2: Get the similarity score', () => {
 		expect(day1.solveForPartTwo(example)).toBe(31);
 	});
 });

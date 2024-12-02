@@ -5,11 +5,11 @@ class Day0 extends Day {
 		super(0);
 	}
 
-	solveForPartOne(input: string): string {
+	solveForPartOne(input: string): string | number {
 		return input;
 	}
 
-	solveForPartTwo(input: string): string {
+	solveForPartTwo(input: string): string | number {
 		return input;
 	}
 }
