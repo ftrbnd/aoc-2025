@@ -1,12 +1,14 @@
 import { Day } from './day';
+import day0 from './day0';
 import day1 from './day1/index';
+import day2 from './day2/index';
 // MORE IMPORTS HERE
 
-type MaybeDay = Day | null;
-const days: MaybeDay[] = [
-	null,
+const days: Day[] = [
+	day0,
 	day1,
-	// MORE DAYS HERE
+	day2,
+    // MORE DAYS HERE
 ];
 
 async function runDay(dayId: number) {
