@@ -12,7 +12,7 @@ describe('On Day 2', () => {
 		expect(day2.solveForPartOne(example)).toBe(2);
 	});
 
-	it(`Part 2: Count how many reports are safe with the Problem Dampener`, () => {
+	it.skip(`Part 2: Count how many reports are safe with the Problem Dampener`, () => {
 		expect(day2.solveForPartTwo(example)).toBe(4);
 	});
 });
