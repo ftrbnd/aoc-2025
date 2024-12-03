@@ -1,7 +1,8 @@
 import day0 from './index';
 
 describe('On Day 0', () => {
-	it.skip(`part1 is identity function`, () => {
-		expect(day0.solveForPartOne('hello')).toBe('hello');
+	it.skip(`Part 1`, () => {
+		const example = ``;
+		expect(day0.solveForPartOne(example)).toBe(``);
 	});
 });
