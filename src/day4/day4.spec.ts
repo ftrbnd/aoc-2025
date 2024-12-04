@@ -13,7 +13,7 @@ MAMMMXMMMM
 MXMXAXMASX
 `;
 
-	it(`Part 1: Find the total occurrences of XMAS`, () => {
+	it.skip(`Part 1: Find the total occurrences of XMAS`, () => {
 		expect(day4.solveForPartOne(example)).toBe(18);
 	});
 

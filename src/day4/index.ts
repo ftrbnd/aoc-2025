@@ -50,7 +50,6 @@ class Day4 extends Day {
 		directions: number[][]
 	): number {
 		let count = 0;
-
 		const relevantCharacters: number[][] = [];
 
 		for (let r = 0; r < puzzle.length; r++) {
@@ -94,6 +93,40 @@ class Day4 extends Day {
 		return count;
 	}
 
+	removeSingleMASes(puzzle: string[][], directions: number[][]) {
+		const relevantCharacters: number[][] = [];
+
+		for (let r = 0; r < puzzle.length; r++) {
+			for (let c = 0; c < puzzle[r].length; c++) {
+				if (puzzle[r][c] === 'A') {
+					const corners = directions.map(([dx, dy]) =>
+						puzzle[r + dx][c + dy] !== '.' && puzzle[r + dx][c + dy] !== 'A'
+							? puzzle[r + dx][c + dy]
+							: '.'
+					);
+
+					const sCount = corners.filter((char) => char === 'S')?.length;
+					const mCount = corners.filter((char) => char === 'M')?.length;
+					const isValidXmas = sCount === 2 && mCount === 2;
+
+					if (isValidXmas) {
+						directions.forEach(([dx, dy]) => {
+							relevantCharacters.push([r + dx, c + dy], [r, c]);
+						});
+					}
+				}
+			}
+		}
+
+		for (let x = 0; x < puzzle.length; x++) {
+			for (let y = 0; y < puzzle[x].length; y++) {
+				if (!relevantCharacters.some(([r, c]) => r === x && c === y)) {
+					puzzle[x][y] = '.';
+				}
+			}
+		}
+	}
+
 	solveForPartOne(input: string): string | number {
 		const puzzle = input
 			.split('\n')
@@ -129,9 +162,10 @@ class Day4 extends Day {
 		];
 
 		this.wordSearch(puzzle, 'MAS', directions);
+		this.removeSingleMASes(puzzle, directions);
 
-		const a_count = puzzle.flatMap((asdf) =>
-			asdf.filter((str) => str === 'A')
+		const a_count = puzzle.flatMap((arr) =>
+			arr.filter((s) => s === 'A')
 		).length;
 
 		return a_count;
