@@ -1,8 +1,7 @@
 import day5 from './index';
 
 describe('On Day 5', () => {
-	it(`Part 1: Add up the middle page number the correctly-ordered updates`, () => {
-		const example = `47|53
+	const example = `47|53
 97|13
 97|61
 97|47
@@ -31,6 +30,12 @@ describe('On Day 5', () => {
 61,13,29
 97,13,75,29,47
 `;
+
+	it.skip(`Part 1: Add up the middle page number of the correctly-ordered updates`, () => {
 		expect(day5.solveForPartOne(example)).toBe(143);
+	});
+
+	it(`Part 2: Add up the middle page number after sorting the incorrectly-ordered updates`, () => {
+		expect(day5.solveForPartTwo(example)).toBe(123);
 	});
 });

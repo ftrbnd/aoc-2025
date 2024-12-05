@@ -36,6 +36,32 @@ class Day5 extends Day {
 		return true;
 	}
 
+	fixUpdateOrder(rules: Map<number, number[]>, update: number[]): number[] {
+		let fixedUpdate: number[] = [];
+
+		for (let i = 0; i < update.length; i++) {
+			const current = update[i];
+			const afters = rules.get(current) ?? [];
+			const outOfOrder = fixedUpdate.some((val) => afters.includes(val));
+
+			if (outOfOrder) {
+				let finalIndex = i - 1;
+				for (let j = i - 1; j >= 0; j--) {
+					if (afters.includes(fixedUpdate[j])) finalIndex = j;
+				}
+
+				const start = fixedUpdate.slice(0, finalIndex);
+				const removed = fixedUpdate.slice(finalIndex);
+
+				fixedUpdate = start.concat(current, ...removed);
+			} else {
+				fixedUpdate.push(update[i]);
+			}
+		}
+
+		return fixedUpdate;
+	}
+
 	solveForPartOne(input: string): string | number {
 		const [r, u] = input.split('\n\n');
 		const [rules, updates] = this.getRulesAndUpdates(r, u);
@@ -51,7 +77,18 @@ class Day5 extends Day {
 	}
 
 	solveForPartTwo(input: string): string | number {
-		return input;
+		const [r, u] = input.split('\n\n');
+		const [rules, updates] = this.getRulesAndUpdates(r, u);
+
+		let sum = 0;
+		for (const update of updates) {
+			if (!this.isCorrectlyOrdered(rules, update)) {
+				const sortedUpdate = this.fixUpdateOrder(rules, update);
+				sum += sortedUpdate[Math.floor(update.length / 2)];
+			}
+		}
+
+		return sum;
 	}
 }
 
