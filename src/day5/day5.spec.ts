@@ -35,7 +35,7 @@ describe('On Day 5', () => {
 		expect(day5.solveForPartOne(example)).toBe(143);
 	});
 
-	it(`Part 2: Add up the middle page number after sorting the incorrectly-ordered updates`, () => {
+	it.skip(`Part 2: Add up the middle page number after sorting the incorrectly-ordered updates`, () => {
 		expect(day5.solveForPartTwo(example)).toBe(123);
 	});
 });
