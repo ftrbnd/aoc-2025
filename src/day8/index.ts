@@ -50,6 +50,38 @@ class Day8 extends Day {
 		return antinodes;
 	}
 
+	getInlineAntinodes(map: string[][], locations: number[][]): number[][] {
+		const antinodes: number[][] = [];
+
+		let cur = 0;
+		while (cur < locations.length) {
+			const curLocation = locations[cur];
+
+			for (let i = cur + 1; i < locations.length; i++) {
+				const next = locations[i];
+				const [dx, dy] = [next[0] - curLocation[0], next[1] - curLocation[1]];
+
+				let [curX, curY] = [curLocation[0], curLocation[1]];
+				// backtrack to first possible antinode
+				while (this.isInRange(map, curX - dx, curY - dy)) {
+					curX -= dx;
+					curY -= dy;
+				}
+
+				// follow the line
+				while (this.isInRange(map, curX, curY)) {
+					antinodes.push([curX, curY]);
+					curX += dx;
+					curY += dy;
+				}
+			}
+
+			cur++;
+		}
+
+		return antinodes;
+	}
+
 	solveForPartOne(input: string): string | number {
 		const map = input
 			.split('\n')
@@ -68,7 +100,20 @@ class Day8 extends Day {
 	}
 
 	solveForPartTwo(input: string): string | number {
-		return input;
+		const map = input
+			.split('\n')
+			.filter((str) => str)
+			.map((str) => str.split(''));
+
+		const uniqueAntinodes = new Set<string>();
+		const antennas = this.getAntennas(map);
+
+		for (const [_, locations] of antennas) {
+			const antinodes = this.getInlineAntinodes(map, locations);
+			antinodes.forEach((a) => uniqueAntinodes.add(`${a[0]}|${a[1]}`));
+		}
+
+		return uniqueAntinodes.size;
 	}
 }
 
