@@ -17,7 +17,11 @@ class Day7 extends Day {
 		return { testValue, nums };
 	}
 
-	isValidEquation(target: number, nums: number[]): boolean {
+	isValidEquation(
+		target: number,
+		nums: number[],
+		withConcatenation?: boolean
+	): boolean {
 		const results: number[] = [];
 
 		function dfs(nums: number[], cur: number) {
@@ -25,6 +29,7 @@ class Day7 extends Day {
 			if (next === undefined) return results.push(cur);
 
 			dfs([...nums], cur + next);
+			if (withConcatenation) dfs([...nums], parseInt(`${cur}${next}`));
 			dfs([...nums], cur * next);
 		}
 		dfs(nums.slice(1), nums[0]);
@@ -45,7 +50,15 @@ class Day7 extends Day {
 	}
 
 	solveForPartTwo(input: string): string | number {
-		return input;
+		const lines = splitLines(input);
+
+		let sum = 0;
+		for (const line of lines) {
+			const { testValue, nums } = this.getValues(line);
+			if (this.isValidEquation(testValue, nums, true)) sum += testValue;
+		}
+
+		return sum;
 	}
 }
 
