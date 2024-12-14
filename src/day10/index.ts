@@ -10,7 +10,12 @@ class Day10 extends Day {
 		return row >= 0 && row < map.length && col >= 0 && col < map[row].length;
 	}
 
-	getTrailheadScore(map: number[][], row: number, col: number) {
+	getTrailheadScore(
+		map: number[][],
+		row: number,
+		col: number,
+		countDistinctTrails?: boolean
+	) {
 		let score = 0;
 		const directions = [
 			[1, 0],
@@ -22,13 +27,14 @@ class Day10 extends Day {
 
 		const dfs = (r: number, c: number, cur: number) => {
 			if (!this.isInRange(map, r, c)) return;
-			if (visited.some(([x, y]) => x === r && y === c)) return;
+			if (visited.some(([x, y]) => !countDistinctTrails && x === r && y === c))
+				return;
 			if (map[r][c] === 9) {
-				visited.push([r, c]);
+				if (!countDistinctTrails) visited.push([r, c]);
 				return score++;
 			}
 
-			visited.push([r, c]);
+			if (!countDistinctTrails) visited.push([r, c]);
 
 			for (const dir of directions) {
 				const dr = r + dir[0];
@@ -52,7 +58,7 @@ class Day10 extends Day {
 		for (let r = 0; r < map.length; r++) {
 			for (let c = 0; c < map[r].length; c++) {
 				if (map[r][c] === 0) {
-					sum += this.getTrailheadScore(map, r, c);
+					sum += this.getTrailheadScore(map, r, c, false);
 				}
 			}
 		}
@@ -61,7 +67,20 @@ class Day10 extends Day {
 	}
 
 	solveForPartTwo(input: string): string | number {
-		return input;
+		const map = splitLines(input).map((row) =>
+			row.split('').map((val) => parseInt(val))
+		);
+
+		let sum = 0;
+		for (let r = 0; r < map.length; r++) {
+			for (let c = 0; c < map[r].length; c++) {
+				if (map[r][c] === 0) {
+					sum += this.getTrailheadScore(map, r, c, true);
+				}
+			}
+		}
+
+		return sum;
 	}
 }
 
