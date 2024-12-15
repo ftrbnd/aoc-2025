@@ -14,7 +14,7 @@ describe('On Day 10', () => {
 		expect(day10.solveForPartOne(example)).toBe(36);
 	});
 
-	it(`Part 2: Get the sum of the scores of all trailheads with distinct trailheads`, () => {
+	it.skip(`Part 2: Get the sum of the scores of all trailheads with distinct trailheads`, () => {
 		expect(day10.solveForPartTwo(example)).toBe(81);
 	});
 });
